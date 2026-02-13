@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zheng Digital Lab - Portofolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #000000;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 150, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 15px 50px;
+            background: rgba(0, 0, 0, 0.95);
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+
+        .nav-logo img {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .nav-logo-text {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            position: relative;
+            padding: 5px 0;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #0066ff, #00d4ff);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #00d4ff;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: #00d4ff;
+        }
+
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .menu-toggle span {
+            width: 30px;
+            height: 2px;
+            background: #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        /* Portfolio Header */
+        .portfolio-header {
+            padding: 150px 50px 80px;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(180deg, #0a0a1a 0%, #000000 100%);
+        }
+
+        .portfolio-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, rgba(0, 150, 255, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .header-badge {
+            display: inline-block;
+            padding: 10px 30px;
+            background: rgba(0, 150, 255, 0.1);
+            border: 1px solid rgba(0, 150, 255, 0.3);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: #00d4ff;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+            animation: fade-in-up 0.8s ease-out;
+        }
+
+        .header-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            animation: fade-in-up 0.8s ease-out 0.2s backwards;
+        }
+
+        .header-title span {
+            background: linear-gradient(90deg, #0066ff, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-subtitle {
+            font-size: 1.15rem;
+            color: rgba(255, 255, 255, 0.6);
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fade-in-up 0.8s ease-out 0.4s backwards;
+        }
+
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Filter Buttons */
+        .filter-section {
+            padding: 20px 50px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            background: #000000;
+        }
+
+        .filter-btn {
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 150, 255, 0.2);
+            border-radius: 50px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: linear-gradient(90deg, #0066ff, #00d4ff);
+            border-color: transparent;
+            color: #ffffff;
+            box-shadow: 0 10px 30px rgba(0, 150, 255, 0.3);
+        }
+
+        /* Portfolio Grid */
+        .portfolio-section {
+            padding: 60px 50px 100px;
+            background: #000000;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .portfolio-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(0, 150, 255, 0.1);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            border-color: rgba(0, 150, 255, 0.5);
+            box-shadow: 0 30px 60px rgba(0, 150, 255, 0.15);
+        }
+
+        .portfolio-image {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .portfolio-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .portfolio-item:hover .portfolio-image img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.9) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .overlay-content {
+            text-align: center;
+            transform: translateY(20px);
+            transition: transform 0.4s ease;
+        }
+
+        .portfolio-item:hover .overlay-content {
+            transform: translateY(0);
+        }
+
+        .overlay-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #0066ff, #00d4ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 1.5rem;
+        }
+
+        .overlay-text {
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .portfolio-content {
+            padding: 25px;
+        }
+
+        .portfolio-category {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(0, 150, 255, 0.1);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: #00d4ff;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .portfolio-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .portfolio-item:hover .portfolio-title {
+            color: #00d4ff;
+        }
+
+        .portfolio-desc {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .portfolio-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 5px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 80px 50px;
+            background: linear-gradient(180deg, #000000 0%, #0a0a1a 100%);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 40px 30px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(0, 150, 255, 0.1);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(0, 150, 255, 0.3);
+            box-shadow: 0 20px 50px rgba(0, 150, 255, 0.1);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(0, 102, 255, 0.2), rgba(0, 212, 255, 0.2));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 20px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #0066ff, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.95rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 100px 50px;
+            background: linear-gradient(135deg, #0a0a1a 0%, #001428 50%, #0a0a1a 100%);
+            text-align: center;
+            position: relative;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 100px;
+            background: linear-gradient(180deg, transparent, rgba(0, 150, 255, 0.5), transparent);
+        }
+
+        .cta-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-content h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .cta-content p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #0066ff, #00d4ff);
+            color: #ffffff;
+            border: none;
+            box-shadow: 0 10px 40px rgba(0, 150, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(0, 150, 255, 0.5);
+        }
+
+        /* Social Media Section */
+        .social-section {
+            padding: 60px 50px;
+            background: linear-gradient(180deg, #0a0a1a 0%, #000000 100%);
+            border-top: 1px solid rgba(0, 150, 255, 0.1);
+        }
+
+        .social-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .social-title {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .social-icon {
+            width: 55px;
+            height: 55px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 150, 255, 0.15);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 150, 255, 0.2), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .social-icon:hover::before {
+            opacity: 1;
+        }
+
+        .social-icon svg {
+            width: 24px;
+            height: 24px;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .social-icon.instagram:hover {
+            border-color: #E4405F;
+            transform: translateY(-8px) scale(1.1);
+            box-shadow: 0 15px 35px rgba(228, 64, 95, 0.3);
+        }
+        .social-icon.instagram svg { fill: #E4405F; }
+
+        .social-icon.whatsapp:hover {
+            border-color: #25D366;
+            transform: translateY(-8px) scale(1.1);
+            box-shadow: 0 15px 35px rgba(37, 211, 102, 0.3);
+        }
+        .social-icon.whatsapp svg { fill: #25D366; }
+
+        .social-icon.facebook:hover {
+            border-color: #1877F2;
+            transform: translateY(-8px) scale(1.1);
+            box-shadow: 0 15px 35px rgba(24, 119, 242, 0.3);
+        }
+        .social-icon.facebook svg { fill: #1877F2; }
+
+        .social-icon.tiktok:hover {
+            border-color: #000000;
+            transform: translateY(-8px) scale(1.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), 0 0 20px rgba(238, 29, 82, 0.3), 0 0 40px rgba(0, 242, 234, 0.2);
+            background: linear-gradient(135deg, #000000, #EE1D52, #00F2EA);
+        }
+        .social-icon.tiktok svg { fill: #ffffff; }
+        .social-icon.tiktok:hover svg { fill: #ffffff; }
+
+        /* Footer */
+        .footer {
+            padding: 40px 50px;
+            background: #0a0a1a;
+            border-top: 1px solid rgba(0, 150, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .footer-logo img {
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+        }
+
+        .footer-logo span {
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .footer-text {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        /* WhatsApp Floating Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 1.8rem;
+            text-decoration: none;
+            box-shadow: 0 10px 40px rgba(37, 211, 102, 0.4);
+            z-index: 999;
+            transition: all 0.3s ease;
+            animation: pulse-wa 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 50px rgba(37, 211, 102, 0.6);
+        }
+
+        @keyframes pulse-wa {
+            0%, 100% { box-shadow: 0 10px 40px rgba(37, 211, 102, 0.4); }
+            50% { box-shadow: 0 10px 60px rgba(37, 211, 102, 0.6); }
+        }
+
+        /* Background Effects */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 150, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 150, 255, 0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Animation Class */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: rgba(0, 0, 0, 0.98);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 30px;
+                transition: right 0.3s ease;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+                z-index: 1001;
+            }
+
+            .menu-toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(6px, 6px);
+            }
+
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(6px, -6px);
+            }
+
+            .portfolio-header {
+                padding: 120px 20px 60px;
+            }
+
+            .header-title {
+                font-size: 2.5rem;
+            }
+
+            .portfolio-section {
+                padding: 40px 20px 80px;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .portfolio-image {
+                height: 200px;
+            }
+
+            .filter-section {
+                padding: 20px;
+            }
+
+            .filter-btn {
+                padding: 10px 20px;
+                font-size: 0.85rem;
+            }
+
+            .stats-section {
+                padding: 60px 20px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .cta-section {
+                padding: 60px 20px;
+            }
+
+            .cta-content h2 {
+                font-size: 2rem;
+            }
+
+            .social-section {
+                padding: 40px 20px;
+            }
+
+            .social-icon {
+                width: 45px;
+                height: 45px;
+            }
+
+            .footer {
+                padding: 30px 20px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Lightbox Modal */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+            animation: lightbox-zoom 0.3s ease;
+        }
+
+        @keyframes lightbox-zoom {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 16px;
+            box-shadow: 0 30px 80px rgba(0, 150, 255, 0.3);
+            border: 2px solid rgba(0, 150, 255, 0.3);
+        }
+
+        .lightbox-info {
+            text-align: center;
+            margin-top: 25px;
+            color: #ffffff;
+        }
+
+        .lightbox-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #0066ff, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .lightbox-info p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 150, 255, 0.2);
+            border: 1px solid rgba(0, 150, 255, 0.3);
+            border-radius: 50%;
+            color: #ffffff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 2001;
+        }
+
+        .lightbox-close:hover {
+            background: linear-gradient(135deg, #0066ff, #00d4ff);
+            transform: rotate(90deg);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 150, 255, 0.2);
+            border: 1px solid rgba(0, 150, 255, 0.3);
+            border-radius: 50%;
+            color: #ffffff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .lightbox-nav:hover {
+            background: linear-gradient(135deg, #0066ff, #00d4ff);
+        }
+
+        .lightbox-prev {
+            left: 20px;
+        }
+
+        .lightbox-next {
+            right: 20px;
+        }
+
+        /* Make portfolio items clickable */
+        .portfolio-item {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <a href="home.html" class="nav-logo">
+            <img src="assets/logo.jpg" alt="Logo">
+            <span class="nav-logo-text">Zheng Digital Lab</span>
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="produk.html">Produk</a></li>
+            <li><a href="portofolio.html" class="active">Portofolio</a></li>
+            <li><a href="tentang.html">Tentang</a></li>
+            <li><a href="hubungi.html">Hubungi</a></li>
+        </ul>
+        <div class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Portfolio Header -->
+    <section class="portfolio-header">
+        <span class="header-badge">Our Work</span>
+        <h1 class="header-title">Portofolio <span>Kami</span></h1>
+        <p class="header-subtitle">Jelajahi karya-karya terbaik kami yang telah membantu berbagai bisnis berkembang di era digital</p>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <button class="filter-btn active" data-filter="all">Semua</button>
+        <button class="filter-btn" data-filter="website">Website</button>
+        <button class="filter-btn" data-filter="ecommerce">E-Commerce</button>
+        <button class="filter-btn" data-filter="aplikasi">Aplikasi</button>
+    </section>
+
+    <!-- Portfolio Grid -->
+    <section class="portfolio-section">
+        <div class="portfolio-grid">
+            <!-- Portfolio Item 1 -->
+            <div class="portfolio-item" data-category="ecommerce">
+                <div class="portfolio-image">
+                    <img src="assets/portfolio1.jpg" alt="E-Commerce Dashboard">
+                    <div class="portfolio-overlay">
+                        <div class="overlay-content">
+                            <div class="overlay-icon">👁️</div>
+                            <span class="overlay-text">Lihat Detail</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-content">
+                    <span class="portfolio-category">E-Commerce</span>
+                    <h3 class="portfolio-title">Dashboard Toko Online Modern</h3>
+                    <p class="portfolio-desc">Platform e-commerce lengkap dengan sistem manajemen produk, pembayaran terintegrasi, dan analitik real-time.</p>
+                    <div class="portfolio-tags">
+                        <span class="tag">React</span>
+                        <span class="tag">Node.js</span>
+                        <span class="tag">MongoDB</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Item 2 -->
+            <div class="portfolio-item" data-category="website">
+                <div class="portfolio-image">
+                    <img src="assets/portfolio2.jpg" alt="Company Profile">
+                    <div class="portfolio-overlay">
+                        <div class="overlay-content">
+                            <div class="overlay-icon">👁️</div>
+                            <span class="overlay-text">Lihat Detail</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-content">
+                    <span class="portfolio-category">Website</span>
+                    <h3 class="portfolio-title">Company Profile Premium</h3>
+                    <p class="portfolio-desc">Website profil perusahaan dengan desain modern dan responsif untuk meningkatkan kredibilitas bisnis.</p>
+                    <div class="portfolio-tags">
+                        <span class="tag">HTML5</span>
+                        <span class="tag">CSS3</span>
+                        <span class="tag">JavaScript</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Item 3 -->
+            <div class="portfolio-item" data-category="aplikasi">
+                <div class="portfolio-image">
+                    <img src="assets/portfolio3.jpg" alt="POS System">
+                    <div class="portfolio-overlay">
+                        <div class="overlay-content">
+                            <div class="overlay-icon">👁️</div>
+                            <span class="overlay-text">Lihat Detail</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-content">
+                    <span class="portfolio-category">Aplikasi</span>
+                    <h3 class="portfolio-title">Aplikasi Kasir Digital</h3>
+                    <p class="portfolio-desc">Sistem POS terintegrasi untuk manajemen penjualan, inventori, dan laporan keuangan real-time.</p>
+                    <div class="portfolio-tags">
+                        <span class="tag">Flutter</span>
+                        <span class="tag">Firebase</span>
+                        <span class="tag">POS</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Item 4 -->
+            <div class="portfolio-item" data-category="aplikasi">
+                <div class="portfolio-image">
+                    <img src="assets/portfolio4.jpg" alt="Business Management">
+                    <div class="portfolio-overlay">
+                        <div class="overlay-content">
+                            <div class="overlay-icon">👁️</div>
+                            <span class="overlay-text">Lihat Detail</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-content">
+                    <span class="portfolio-category">Aplikasi</span>
+                    <h3 class="portfolio-title">Sistem Manajemen Bisnis</h3>
+                    <p class="portfolio-desc">Platform ERP komprehensif untuk mengelola operasional bisnis secara terintegrasi dan efisien.</p>
+                    <div class="portfolio-tags">
+                        <span class="tag">Vue.js</span>
+                        <span class="tag">Laravel</span>
+                        <span class="tag">MySQL</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Item 5 -->
+            <div class="portfolio-item" data-category="ecommerce">
+                <div class="portfolio-image">
+                    <img src="assets/portfolio5.jpg" alt="Online Store">
+                    <div class="portfolio-overlay">
+                        <div class="overlay-content">
+                            <div class="overlay-icon">👁️</div>
+                            <span class="overlay-text">Lihat Detail</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-content">
+                    <span class="portfolio-category">E-Commerce</span>
+                    <h3 class="portfolio-title">Website Toko Online</h3>
+                    <p class="portfolio-desc">Platform toko online dengan fitur lengkap termasuk keranjang belanja, checkout, dan tracking pesanan.</p>
+                    <div class="portfolio-tags">
+                        <span class="tag">WooCommerce</span>
+                        <span class="tag">PHP</span>
+                        <span class="tag">SSL</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Item 6 -->
+            <div class="portfolio-item" data-category="website">
+                <div class="portfolio-image">
+                    <img src="assets/portfolio6.jpg" alt="Landing Page">
+                    <div class="portfolio-overlay">
+                        <div class="overlay-content">
+                            <div class="overlay-icon">👁️</div>
+                            <span class="overlay-text">Lihat Detail</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-content">
+                    <span class="portfolio-category">Website</span>
+                    <h3 class="portfolio-title">Landing Page Premium</h3>
+                    <p class="portfolio-desc">Landing page high-converting dengan desain menarik dan optimasi untuk meningkatkan konversi.</p>
+                    <div class="portfolio-tags">
+                        <span class="tag">Next.js</span>
+                        <span class="tag">Tailwind</span>
+                        <span class="tag">SEO</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-number">150+</div>
+                <div class="stat-label">Proyek Selesai</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">😊</div>
+                <div class="stat-number">100+</div>
+                <div class="stat-label">Klien Puas</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-number">5+</div>
+                <div class="stat-label">Tahun Pengalaman</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🏆</div>
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Penghargaan</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Punya Proyek Baru?</h2>
+            <p>Mari diskusikan ide dan kebutuhan bisnis Anda bersama tim ahli kami. Kami siap mewujudkan visi digital Anda.</p>
+            <a href="hubungi.html" class="btn btn-primary">Mulai Konsultasi</a>
+        </div>
+    </section>
+
+    <!-- Social Media Section -->
+    <section class="social-section">
+        <div class="social-container">
+            <h3 class="social-title">Ikuti Kami</h3>
+            <div class="social-icons">
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/zheng_digital_lab?igsh=enE4MW81YXluOXU4" class="social-icon instagram" title="Instagram" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                </a>
+                <!-- WhatsApp -->
+                <a href="https://wa.me/6288973745596?text=Halo%20Zheng%20Digital%20Lab%2C%20saya%20ingin%20konsultasi." class="social-icon whatsapp" title="WhatsApp" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                </a>
+                <!-- TikTok -->
+                <a href="https://www.tiktok.com/@zheng_digital_lab?_r=1&_t=ZS-93tCqYJYG84" class="social-icon tiktok" title="TikTok" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+                </a>
+                <!-- Facebook -->
+                <a href="https://www.facebook.com/profile.php?id=61581750809423" class="social-icon facebook" title="Facebook" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="assets/logo.jpg" alt="Logo">
+                <span>Zheng Digital Lab</span>
+            </div>
+            <p class="footer-text">© 2025 Zheng Digital Lab. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/6288973745596?text=Halo%20Zheng%20Digital%20Lab%2C%20saya%20ingin%20konsultasi." class="whatsapp-float" target="_blank" title="Chat WhatsApp">
+        💬
+    </a>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose">✕</button>
+        <button class="lightbox-nav lightbox-prev" id="lightboxPrev">❮</button>
+        <button class="lightbox-nav lightbox-next" id="lightboxNext">❯</button>
+        <div class="lightbox-content">
+            <img src="" alt="" id="lightboxImage">
+            <div class="lightbox-info">
+                <h3 id="lightboxTitle"></h3>
+                <p id="lightboxDesc"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Portfolio Filter
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterBtns.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+
+                const filter = btn.getAttribute('data-filter');
+
+                portfolioItems.forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                        item.style.display = 'block';
+                        item.style.animation = 'fade-in-up 0.5s ease forwards';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Lightbox functionality
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxTitle = document.getElementById('lightboxTitle');
+        const lightboxDesc = document.getElementById('lightboxDesc');
+        const lightboxClose = document.getElementById('lightboxClose');
+        const lightboxPrev = document.getElementById('lightboxPrev');
+        const lightboxNext = document.getElementById('lightboxNext');
+
+        let currentIndex = 0;
+        let visibleItems = [];
+
+        // Get all portfolio items data
+        function getPortfolioData() {
+            visibleItems = [];
+            document.querySelectorAll('.portfolio-item').forEach((item, index) => {
+                if (item.style.display !== 'none') {
+                    const img = item.querySelector('.portfolio-image img');
+                    const title = item.querySelector('.portfolio-title').textContent;
+                    const desc = item.querySelector('.portfolio-desc').textContent;
+                    visibleItems.push({
+                        imgSrc: img.src,
+                        imgAlt: img.alt,
+                        title: title,
+                        desc: desc
+                    });
+                }
+            });
+        }
+
+        // Open lightbox
+        function openLightbox(index) {
+            getPortfolioData();
+            currentIndex = index;
+            updateLightbox();
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close lightbox
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Update lightbox content
+        function updateLightbox() {
+            const item = visibleItems[currentIndex];
+            lightboxImage.src = item.imgSrc;
+            lightboxImage.alt = item.imgAlt;
+            lightboxTitle.textContent = item.title;
+            lightboxDesc.textContent = item.desc;
+        }
+
+        // Previous image
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + visibleItems.length) % visibleItems.length;
+            updateLightbox();
+        }
+
+        // Next image
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % visibleItems.length;
+            updateLightbox();
+        }
+
+        // Add click event to portfolio items
+        document.querySelectorAll('.portfolio-item').forEach((item, index) => {
+            item.addEventListener('click', () => {
+                getPortfolioData();
+                // Find the correct index in visible items
+                let visibleIndex = 0;
+                let found = false;
+                document.querySelectorAll('.portfolio-item').forEach((el, i) => {
+                    if (el.style.display !== 'none') {
+                        if (el === item && !found) {
+                            found = true;
+                        } else if (!found) {
+                            visibleIndex++;
+                        }
+                    }
+                });
+                openLightbox(found ? visibleIndex : 0);
+            });
+        });
+
+        // Close button
+        lightboxClose.addEventListener('click', closeLightbox);
+
+        // Navigation buttons
+        lightboxPrev.addEventListener('click', prevImage);
+        lightboxNext.addEventListener('click', nextImage);
+
+        // Close on background click
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (lightbox.classList.contains('active')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') prevImage();
+                if (e.key === 'ArrowRight') nextImage();
+            }
+        });
+
+        // Animation on scroll - berulang saat scroll atas bawah
+        const animateElements = document.querySelectorAll('.portfolio-item, .stat-card');
+        
+        animateElements.forEach(el => {
+            el.classList.add('animate-on-scroll');
+        });
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                } else {
+                    entry.target.classList.remove('visible');
+                }
+            });
+        }, observerOptions);
+
+        animateElements.forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
