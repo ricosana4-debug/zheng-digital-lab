@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zheng Digital Lab Pricelist</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Futura:wght@500;700&family=HarmonyOS+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-standard: #e67e22; /* Bronze/Orange */
+            --accent-regular: #2980b9; /* Silver/Blue */
+            --accent-premium: #f1c40f; /* Gold/Yellow - text color on dark */
+            --bg-premium: #1a1a1a;
+            --bg-color: #f4f6f8;
+            --card-bg: #ffffff;
+            --text-main: #333333;
+            --text-secondary: #666666;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'HarmonyOS Sans SC', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .poster-container {
+            width: 720px;
+            min-height: 960px;
+            background-color: var(--bg-color);
+            padding: 40px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* Header Section */
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-container {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .brand-title {
+            font-family: 'Futura', sans-serif;
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0 0 10px 0;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+
+        .brand-subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            margin: 0 0 16px 0;
+            font-weight: 500;
+        }
+
+        .highlight-box {
+            display: inline-block;
+            background-color: #ffeaa7;
+            color: #d35400;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* Package Card Styles */
+        .package-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: transform 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .package-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+        }
+
+        .package-standard::before { background-color: var(--accent-standard); }
+        .package-regular::before { background-color: var(--accent-regular); }
+        .package-premium::before { background-color: var(--accent-premium); }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 16px;
+        }
+
+        .package-name {
+            font-size: 24px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .price-range {
+            font-family: 'Futura', sans-serif;
+            font-size: 26px;
+            font-weight: 700;
+        }
+        
+        .package-standard .price-range { color: var(--accent-standard); }
+        .package-regular .price-range { color: var(--accent-regular); }
+        .package-premium .price-range { color: #d4ac0d; }
+
+        .info-badge {
+            display: flex;
+            gap: 12px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            background: #f8f9fa;
+            padding: 8px;
+            border-radius: 8px;
+            width: fit-content;
+        }
+
+        .info-badge span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Package Image */
+        .package-image {
+            width: 100%;
+            height: 200px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .package-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Price Table */
+        .price-table-container {
+            margin-bottom: 16px;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .price-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .price-table td {
+            padding: 8px 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .price-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .price-table .page-num {
+            font-weight: 600;
+            color: var(--text-secondary);
+            width: 40%;
+        }
+
+        .price-table .price-val {
+            font-weight: 700;
+            text-align: right;
+        }
+
+        /* Features List */
+        .features-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .features-list li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-main);
+        }
+
+        .features-list li i {
+            font-size: 18px;
+        }
+        
+        .package-standard .features-list i { color: var(--accent-standard); }
+        .package-regular .features-list i { color: var(--accent-regular); }
+        .package-premium .features-list i { color: var(--accent-premium); }
+        
+        .package-premium {
+            background: #222;
+            color: #fff;
+            border: 1px solid #333;
+        }
+        
+        .package-premium .package-name { color: #fff; }
+        .package-premium .info-badge { background: #333; color: #ccc; }
+        .package-premium .price-table-container { border-color: #444; }
+        .package-premium .price-table td { border-color: #333; color: #ddd; }
+        .package-premium .page-num { color: #888; }
+        .package-premium .features-list li { color: #fff; }
+        .package-premium .card-header { border-color: #333; }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 2px dashed #ddd;
+        }
+        
+        .footer p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin: 4px 0;
+        }
+        
+        .contact-btn {
+            margin-top: 10px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(44, 62, 80, 0.3);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="poster-container">
+        <header>
+            <div class="logo-container">
+                <img src="https://sfile.chatglm.cn/images-ppt/3679998f420d.png" alt="Zheng Digital Lab Logo">
+            </div>
+            <h1 class="brand-title">Zheng Digital Lab</h1>
+            <div class="brand-subtitle">Jasa Pembuatan Website Profesional</div>
+            <div class="highlight-box">
+                <i class="material-icons" style="font-size:18px; vertical-align:middle; margin-right:5px;">verified</i>
+                DP 20% Untuk Mulai Pengerjaan
+            </div>
+        </header>
+
+        <!-- Paket Standar -->
+        <div class="package-card package-standard">
+            <div class="card-header">
+                <div class="package-name">
+                    🥉 PAKET STANDAR
+                </div>
+                <div class="price-range">300rb - 700rb</div>
+            </div>
+            
+            <div class="info-badge">
+                <span><i class="material-icons">layers</i> 1–6 Halaman</span>
+                <span><i class="material-icons">schedule</i> 1 Hari</span>
+            </div>
+
+            <div class="package-image">
+                <img src="https://sfile.chatglm.cn/images-ppt/1e19e12ad249.jpg" alt="Website Landing Page Sederhana">
+            </div>
+
+            <div class="price-table-container">
+                <table class="price-table">
+                    <tr>
+                        <td class="page-num">1 Page</td>
+                        <td class="price-val">300rb</td>
+                    </tr>
+                    <tr>
+                        <td class="page-num">2 Page</td>
+                        <td class="price-val">400rb</td>
+                    </tr>
+                    <tr>
+                        <td class="page-num">3 Page</td>
+                        <td class="price-val">500rb</td>
+                    </tr>
+                    <tr>
+                        <td class="page-num">4 Page</td>
+                        <td class="price-val">600rb</td>
+                    </tr>
+                    <tr>
+                        <td class="page-num">5–6 Page</td>
+                        <td class="price-val">700rb</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="features-title">Include:</div>
+            <ul class="features-list">
+                <li><i class="material-icons">devices</i> Desain Responsif</li>
+                <li><i class="material-icons">chat</i> Integrasi WhatsApp</li>
+                <li><i class="material-icons">language</i> Domain (.online, .site)</li>
+                <li><i class="material-icons">web</i> File Website</li>
+            </ul>
+        </div>
+
+        <!-- Paket Reguler -->
+        <div class="package-card package-regular">
+            <div class="card-header">
+                <div class="package-name">
+                    🥈 PAKET REGULER
+                </div>
+                <div class="price-range">700rb - 3jt</div>
+            </div>
+            
+            <div class="info-badge">
+                <span><i class="material-icons">layers</i> 1–10 Halaman</span>
+                <span><i class="material-icons">schedule</i> 2–5 Hari</span>
+            </div>
+
+            <div class="package-image">
+                <img src="https://sfile.chatglm.cn/images-ppt/3043a1534f59.jpg" alt="Website Bisnis Profesional">
+            </div>
+
+            <div class="price-table-container">
+                <table class="price-table">
+                    <tr>
+                        <td class="page-num">1 Page</td>
+                        <td class="price-val">700rb</td>
+                    </tr>
+                    <tr>
+                        <td class="page-num">2 Page</td>
+                        <td class="price-val">1jt</td>
+                    </tr>
+                    <tr>
+                        <td class="page-num">3–4 Page</td>
+                        <td class="price-val">1,5jt</td>
+                    </tr>
+                    <tr>
+                        <td class="page-num">5–6 Page</td>
+                        <td class="price-val">2jt</td>
+                    </tr>
+                    <tr>
+                        <td class="page-num">7 Page</td>
+                        <td class="price-val">2,5jt</td>
+                    </tr>
+                    <tr>
+                        <td class="page-num">8–10 Page</td>
+                        <td class="price-val">3jt</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="features-title">Include:</div>
+            <ul class="features-list">
+                <li><i class="material-icons">check_circle</i> Semua Fitur Standar</li>
+                <li><i class="material-icons">dns</i> Hosting + SSL</li>
+                <li><i class="material-icons">diamond</i> Desain Premium</li>
+                <li><i class="material-icons">public</i> Domain (.com, .id)</li>
+                <li><i class="material-icons">trending_up</i> Optimasi SEO</li>
+            </ul>
+        </div>
+
+        <!-- Paket Premium -->
+        <div class="package-card package-premium">
+            <div class="card-header">
+                <div class="package-name">
+                    🥇 PAKET PREMIUM
+                </div>
+                <div class="price-range">3jt - 25jt</div>
+            </div>
+            
+            <div class="info-badge">
+                <span><i class="material-icons">layers</i> 1–20 Halaman</span>
+                <span><i class="material-icons">admin_panel_settings</i> Dashboard Admin</span>
+            </div>
+
+            <div class="package-image">
+                <img src="https://sfile.chatglm.cn/images-ppt/457ab08bc746.jpg" alt="Dashboard Admin dengan Statistik">
+            </div>
+
+            <!-- Premium doesn't have per-page table in prompt, showing key features instead -->
+            <div class="price-table-container" style="background: #333; padding: 10px; border:none;">
+                 <p style="margin:0; font-size:14px; color:#ddd; text-align:center;">Custom System Development</p>
+            </div>
+
+            <div class="features-title">
+                <i class="material-icons" style="color:var(--accent-premium);">verified</i> All Features + Extras:
+            </div>
+            <ul class="features-list" style="grid-template-columns: 1fr;">
+                <li><i class="material-icons">check</i> Login Multi-user (Hak Akses)</li>
+                <li><i class="material-icons">check</i> Database & CRUD System</li>
+                <li><i class="material-icons">check</i> Statistik & Laporan Otomatis</li>
+                <li><i class="material-icons">check</i> Sistem Custom Sesuai Kebutuhan</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <p>Ready untuk mengembangkan bisnis Anda?</p>
+            <div class="contact-btn">
+                Konsultasi Sekarang <i class="material-icons">arrow_forward</i>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
